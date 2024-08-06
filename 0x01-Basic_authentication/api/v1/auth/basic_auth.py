@@ -43,7 +43,8 @@ class BasicAuth(Auth):
             return None, None
         return h.split(":", 1)
 
-    def user_object_from_credentials(self, em: str, pd: str) -> TypeVar('User'):
+    def user_object_from_credentials(self,
+                                     em: str, pd: str) -> TypeVar('User'):
         """ Returns the User instance based on
           email and password. """
         if not isinstance(em, str) or not isinstance(pd, str):
