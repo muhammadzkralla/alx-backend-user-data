@@ -22,7 +22,7 @@ class BasicAuth(Auth):
         return h.split(" ", 1)[1]
 
     def decode_base64_authorization_header(self, h: str) -> str:
-        """Decodes the Base64 authorization header"""
+        """ Decodes the Base64 authorization header. """
         if not isinstance(h, str):
             return None
         try:
@@ -31,3 +31,12 @@ class BasicAuth(Auth):
             return decoded_bytes.decode('utf-8')
         except (base64.binascii.Error, UnicodeDecodeError):
             return None
+
+    def extract_user_credentials(self, h: str) -> (str, str):
+        """ Extracts the user email and password
+          from the Base64 decoded value. """
+        if not isinstance(h, str):
+            return None, None
+        if ':' not in h:
+            return None, None
+        return h.split(":", 1)
