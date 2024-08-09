@@ -2,7 +2,7 @@
 """ Module of session views
 """
 
-from flask import request, jsonify
+from flask import request, jsonify, abort
 from api.v1.views import app_views
 from models.user import User
 from os import getenv
@@ -22,11 +22,7 @@ def login():
     if not password:
         return jsonify({"error": "password missing"}), 400
 
-    try:
-        users = User.search({'email': email})
-    except Exception:
-        return jsonify(error="no user found for this email"), 404
-    
+    users = User.search({'email': email})
     if not users or len(users) == 0:
         return jsonify({"error": "no user found for this email"}), 404
 
@@ -42,3 +38,18 @@ def login():
     response.set_cookie(cookie_name, session_id)
 
     return response
+
+
+@app_views.route('/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
+def logout():
+    """ DELETE /auth_session/logout
+    Return:
+      - Response
+    """
+    from api.v1.app import auth
+
+    if not auth.destroy_session(request):
+        abort(404)
+
+    return jsonify({}), 200
