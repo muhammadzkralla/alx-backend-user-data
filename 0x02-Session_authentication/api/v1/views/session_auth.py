@@ -10,7 +10,10 @@ from os import getenv
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def login():
-    """ POST /auth_session/login """
+    """ POST /auth_session/login
+    Return:
+      - Response
+    """
     email = request.form.get('email')
     password = request.form.get('password')
 
