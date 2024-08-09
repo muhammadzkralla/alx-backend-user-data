@@ -2,7 +2,7 @@
 """ Module of session views
 """
 
-from flask import request, jsonify, abort
+from flask import request, jsonify
 from api.v1.views import app_views
 from models.user import User
 from os import getenv
@@ -39,4 +39,3 @@ def login():
     response.set_cookie(cookie_name, session_id)
 
     return response
-
