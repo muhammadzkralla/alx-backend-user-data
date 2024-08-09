@@ -33,9 +33,12 @@ def before_request():
         return
 
     # Paths that do not require authentication
-    excluded_paths = ['/api/v1/status/',
-                      '/api/v1/unauthorized/', '/api/v1/forbidden/',
-                      '/api/v1/auth_session/login/']
+    excluded_paths = [
+        "/api/v1/status/",
+        "/api/v1/unauthorized/",
+        "/api/v1/forbidden/",
+        "/api/v1/auth_session/login/"
+    ]
 
     if auth.authorization_header(request):
         return None
